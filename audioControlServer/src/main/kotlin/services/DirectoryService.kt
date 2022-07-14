@@ -2,8 +2,9 @@ package com.github.DevSanso.audioControlServer.services
 
 import com.github.DevSanso.audioControlServer.model.DirectoryModel
 import com.github.DevSanso.audioControlServer.repository.FileMetaRepository
-import com.github.DevSanso.audioControlServer.extension.dtfp.FileMetaEntityToFileDataModel
+import com.github.DevSanso.audioControlServer.extension.dtfp.MultipartFileToFileMetaEntity.toFileMetaEntity
 import com.github.DevSanso.audioControlServer.extension.dtfp.FileMetaEntityToFileDataModel.toFileDataModel
+
 import org.apache.commons.io.FilenameUtils
 
 
@@ -22,11 +23,13 @@ class DirectoryService @Autowired constructor(private val directoryModel: Direct
 
 
     @Transactional
-    fun uploadFile(file : MultipartFile) : Result<Unit> {
+    fun uploadFile(file : MultipartFile) {
+        val entity = file.toFileMetaEntity()
+        fileMetaRepository.save(entity)
+        val res = directoryModel.upload(file)
 
-
-
-
-        return Result.success(Unit)
+        res.onFailure {
+            throw IllegalArgumentException(it.message)
+        }
     }
 }

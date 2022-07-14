@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository
 
 
 @Repository
-interface FileMetaRepository : JpaRepository<FileMetaEntity,Long>{}
+interface FileMetaRepository : JpaRepository<FileMetaEntity,Long>{
+
+}

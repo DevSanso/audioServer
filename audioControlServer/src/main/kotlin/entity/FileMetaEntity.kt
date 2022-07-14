@@ -5,7 +5,8 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.Table
-import kotlin.properties.Delegates
+
+
 
 
 @Entity
@@ -22,7 +23,9 @@ class FileMetaEntity(title : String,
 
     @Column(name="title")
     var title : String = title
-    @Column(name="file_name")
+
+
+    @Column(name="file_name", unique = true)
     var fileName : String = fileName
 
     @Column(name="artist")

@@ -22,15 +22,15 @@ class DirectoryController {
 
     @PostMapping("/upload")
     fun upload(@RequestParam(name="file") file : MultipartFile,resp : HttpServletResponse) {
-        val res = directoryService.uploadFile(file)
-        res.onFailure {
+        try {
+            directoryService.uploadFile(file)
+        }catch(e : Exception) {
             resp.status = 500
-            resp.writer.println(it.message)
+            resp.writer.println(e.message)
+            return
         }
-        res.onSuccess {
-            resp.status = 200
-            resp.writer.print("ok")
-        }
+        resp.status = 200
+        resp.writer.print("ok")
     }
     @DeleteMapping("/delete/:name")
     fun delete() {
