@@ -17,16 +17,13 @@ class FileMetaEntity(title : String,
                      imageType : String,
                      imageData : ByteArray) {
     @Id
-    @GeneratedValue
-    @Column(name="id")
-    var id : Long? = null
+    @Column(name="file_name", nullable = false)
+    var fileName : String = fileName
 
     @Column(name="title")
     var title : String = title
 
 
-    @Column(name="file_name", unique = true)
-    var fileName : String = fileName
 
     @Column(name="artist")
     var artist : String = artist
