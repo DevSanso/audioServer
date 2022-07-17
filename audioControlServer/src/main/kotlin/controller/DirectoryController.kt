@@ -2,9 +2,12 @@ package com.github.DevSanso.audioControlServer.controller
 
 import com.github.DevSanso.audioControlServer.model.FileMetaDataModel
 import com.github.DevSanso.audioControlServer.services.DirectoryService
+import com.github.DevSanso.audioControlServer.extension.utils.HttpServletResponseWriteError
+import com.github.DevSanso.audioControlServer.extension.utils.HttpServletResponseWriteError.writeError
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -25,16 +28,22 @@ class DirectoryController {
         try {
             directoryService.uploadFile(file)
         }catch(e : Exception) {
-            resp.status = 500
-            resp.writer.println(e.message)
+            resp.writeError(500,e)
             return
         }
         resp.status = 200
         resp.writer.print("ok")
     }
-    @DeleteMapping("/delete/:name")
-    fun delete() {
-
+    @DeleteMapping("/delete/{fileName}")
+    fun delete(@PathVariable("fileName") name : String,resp : HttpServletResponse) {
+        try {
+            directoryService.deleteFile(name)
+        }catch (e : Exception) {
+            resp.writeError(500,e)
+            return
+        }
+        resp.status = 200
+        resp.writer.print("deleted")
     }
     @ResponseBody
     @GetMapping("/list")

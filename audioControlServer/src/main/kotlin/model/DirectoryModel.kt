@@ -4,9 +4,11 @@ import com.github.DevSanso.audioControlServer.configure.BaseDirConfigure
 import org.apache.commons.io.FilenameUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Scope
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
+import java.nio.file.Files
 import java.io.FileOutputStream
 import java.nio.file.Path
 import kotlin.io.path.Path
@@ -26,22 +28,19 @@ class DirectoryModel @Autowired constructor(baseDirConfigure: BaseDirConfigure)
         return FileOutputStream(f)
 
     }
-    fun upload(file : MultipartFile) : Result<Unit> {
+    fun upload(file : MultipartFile) {
         val ext = FilenameUtils.getExtension(file.name)
-        if (ext != ".mp3") {
-            return Result.failure(Throwable(message = "$ext != .mp3"))
-        }
+        if (ext != ".mp3") throw IllegalArgumentException( "$ext != .mp3")
+
 
         val hhdPath = Path(basePath,file.name)
-        try {
-            val wStream = createOutputStream(hhdPath)
-            wStream.write(file.bytes)
-            wStream.close()
-        }catch(e : java.lang.Exception) {
-            return Result.failure(Throwable(message = e.toString()))
-        }
-
-        return Result.success(Unit)
+        val wStream = createOutputStream(hhdPath)
+        wStream.write(file.bytes)
+        wStream.close()
     }
-
+    fun delete(fileName : String) {
+        val phyFilePath = Path(basePath,fileName)
+        val deleted = Files.deleteIfExists(phyFilePath)
+        if(deleted) throw NotFoundException()
+    }
 }

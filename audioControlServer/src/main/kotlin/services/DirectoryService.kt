@@ -26,10 +26,11 @@ class DirectoryService @Autowired constructor(private val directoryModel: Direct
     fun uploadFile(file : MultipartFile) {
         val entity = file.toFileMetaEntity()
         fileMetaRepository.save(entity)
-        val res = directoryModel.upload(file)
-
-        res.onFailure {
-            throw IllegalArgumentException(it.message)
-        }
+        directoryModel.upload(file)
+    }
+    @Transactional
+    fun deleteFile(fileName : String) {
+        fileMetaRepository.deleteAllById(listOf(fileName))
+        directoryModel.delete(fileName)
     }
 }
