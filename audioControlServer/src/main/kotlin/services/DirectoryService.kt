@@ -4,6 +4,7 @@ import com.github.DevSanso.audioControlServer.model.DirectoryModel
 import com.github.DevSanso.audioControlServer.repository.FileMetaRepository
 import com.github.DevSanso.audioControlServer.extension.dtfp.MultipartFileToFileMetaEntity.toFileMetaEntity
 import com.github.DevSanso.audioControlServer.extension.dtfp.FileMetaEntityToFileDataModel.toFileDataModel
+import com.github.DevSanso.audioControlServer.model.FileMetaDataModel
 
 import org.apache.commons.io.FilenameUtils
 
@@ -19,7 +20,7 @@ class DirectoryService @Autowired constructor(private val directoryModel: Direct
                                               private val fileMetaRepository: FileMetaRepository){
 
 
-    fun fileMetaDataList() =  fileMetaRepository.findAll().map {it.toFileDataModel()}
+    fun fileMetaDataList() =  fileMetaRepository.findAllAndSortedTitle().map {it.toFileDataModel()}
 
 
     @Transactional
@@ -33,4 +34,5 @@ class DirectoryService @Autowired constructor(private val directoryModel: Direct
         fileMetaRepository.deleteAllById(listOf(fileName))
         directoryModel.delete(fileName)
     }
+
 }
