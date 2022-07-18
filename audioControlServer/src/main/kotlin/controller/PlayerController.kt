@@ -1,29 +1,45 @@
 package com.github.DevSanso.audioControlServer.controller
 
-import com.github.DevSanso.audioControlServer.model.DirectoryModel
+import com.github.DevSanso.audioControlServer.extension.utils.HttpServletResponseWriteError.writeError
+import com.github.DevSanso.audioControlServer.services.StreamServerControlService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import javax.servlet.http.HttpServletResponse
 
 
 @RestController
+@RequestMapping("/command")
 class PlayerController {
     @Autowired
-    lateinit var directoryModel: DirectoryModel
-    @GetMapping("/play")
-    fun playCommand() {
-
+    lateinit var streamServerControlService: StreamServerControlService
+    @PatchMapping("/play")
+    fun playCommand(rasp : HttpServletResponse) {
+        try {
+            streamServerControlService.play()
+        }catch(e : Exception) {
+            rasp.writeError(500,e)
+        }
+        rasp.status = 200
     }
-    @GetMapping("/stop")
-    fun stopCommand() {
-
+    @PatchMapping("/stop")
+    fun stopCommand(rasp : HttpServletResponse) {
+        try {
+            streamServerControlService.stop()
+        }catch(e : Exception) {
+            rasp.writeError(500,e)
+        }
+        rasp.status = 200
     }
-    @GetMapping("/previous")
-    fun previousCommand() {
-
+    @PatchMapping("/seek")
+    fun seekCommand(@RequestBody rawDuration : String) {
     }
-    @GetMapping("/next")
-    fun nextCommand() {
-
+    @PutMapping("/setAlarm")
+    fun setAlarmCommand(@RequestBody fileName : String,rasp : HttpServletResponse) {
+        try {
+            streamServerControlService.changeAlarm(fileName)
+        }catch(e : Exception) {
+            rasp.writeError(500,e)
+        }
+        rasp.status = 200
     }
 }

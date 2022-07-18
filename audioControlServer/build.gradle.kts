@@ -40,6 +40,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.apache.tika:tika-core:2.4.1")
 	implementation("net.jthink:jaudiotagger:3.0.1")
+	implementation("com.squareup.okhttp3:okhttp:4.10.0")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.7.1")
 	runtimeOnly("org.mariadb.jdbc:mariadb-java-client:3.0.6")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
