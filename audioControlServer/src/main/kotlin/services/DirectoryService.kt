@@ -1,7 +1,7 @@
 package com.github.DevSanso.audioControlServer.services
 
 
-import com.github.DevSanso.audioControlServer.model.FileMetaDataModel
+import com.github.DevSanso.audioControlServer.model.vo.FileMetaDataModel
 import org.springframework.web.multipart.MultipartFile
 import javax.transaction.Transactional
 

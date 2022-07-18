@@ -1,8 +1,7 @@
 package com.github.DevSanso.audioControlServer.controller
 
-import com.github.DevSanso.audioControlServer.model.FileMetaDataModel
+import com.github.DevSanso.audioControlServer.model.vo.FileMetaDataModel
 import com.github.DevSanso.audioControlServer.services.DirectoryService
-import com.github.DevSanso.audioControlServer.extension.utils.HttpServletResponseWriteError
 import com.github.DevSanso.audioControlServer.extension.utils.HttpServletResponseWriteError.writeError
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.DeleteMapping

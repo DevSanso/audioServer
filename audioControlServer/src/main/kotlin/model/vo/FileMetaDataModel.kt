@@ -1,4 +1,4 @@
-package com.github.DevSanso.audioControlServer.model
+package com.github.DevSanso.audioControlServer.model.vo
 
 import com.github.DevSanso.audioControlServer.model.parts.ImageMetaData
 
