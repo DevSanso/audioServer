@@ -2,7 +2,7 @@ package com.github.DevSanso.audioControlServer.services
 
 import com.github.DevSanso.audioControlServer.extension.dtfp.FileMetaEntityToFileDataModel.toFileDataModel
 import com.github.DevSanso.audioControlServer.extension.dtfp.MultipartFileToFileMetaEntity.toFileMetaEntity
-import com.github.DevSanso.audioControlServer.model.DirectoryModel
+import com.github.DevSanso.audioControlServer.model.dao.DirectoryModel
 import com.github.DevSanso.audioControlServer.repository.FileMetaRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -10,9 +10,9 @@ import org.springframework.web.multipart.MultipartFile
 import javax.transaction.Transactional
 
 
-@Service("DirectoryService")
+@Service("directoryService")
 class DirectoryServiceImpl @Autowired constructor(private val directoryModel: DirectoryModel,
-                                                 private val fileMetaRepository: FileMetaRepository) : DirectoryService{
+                                                  private val fileMetaRepository: FileMetaRepository) : DirectoryService{
 
     override fun fileMetaDataList() =  fileMetaRepository.findAllAndSortedTitle().map {it.toFileDataModel()}
 

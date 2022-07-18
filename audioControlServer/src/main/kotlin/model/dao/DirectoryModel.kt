@@ -1,4 +1,4 @@
-package com.github.DevSanso.audioControlServer.model
+package com.github.DevSanso.audioControlServer.model.dao
 
 import com.github.DevSanso.audioControlServer.configure.BaseDirConfigure
 import org.apache.commons.io.FilenameUtils
